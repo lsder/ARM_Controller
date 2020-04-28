@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM", "..\ARM\ARM.csproj", "{D30BBF0E-B6C3-4974-84B4-244F11E76239}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM", "ARM.csproj", "{D30BBF0E-B6C3-4974-84B4-244F11E76239}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
