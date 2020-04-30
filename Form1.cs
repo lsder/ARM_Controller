@@ -14,6 +14,10 @@ namespace ARM
     public partial class Form1 : Form
     {
         String serialPortName;
+
+        Pos cur_pos =new Pos();
+        Pos zero_pos= new Pos();
+
         public Form1()
         {
             InitializeComponent();
@@ -24,6 +28,21 @@ namespace ARM
             string[] ports = System.IO.Ports.SerialPort.GetPortNames();//获取电脑上可用串口号
             com_list.Items.AddRange(ports);//给comboBox1添加数据
             com_list.SelectedIndex = com_list.Items.Count > 0 ? 0 : -1;//如果里面有数据,显示第0个
+            init_pos();
+        }
+        void init_pos()
+        {
+            zero_pos.pp.a = 144;//大180-36
+            zero_pos.pp.b = -64;//小144-（116-180+144）
+            zero_pos.pp.c = 0;//底
+            zero_pos.pr.x = 1;//水平
+            zero_pos.pr.y = 1;//垂直
+            zero_pos.pr.z = 1;//垂直平面
+            zero_pos.calculate_forward_Transform();
+
+
+            cur_pos = zero_pos;
+        
         }
 
         private void btn_conn_Click(object sender, EventArgs e)
@@ -83,5 +102,63 @@ namespace ARM
              
             })));
         }
+
+        private void O_Click(object sender, EventArgs e)
+        {
+            serialPort1.Write("G90G0X0Y0Z0\n");
+            cur_pos = zero_pos;
+            
+
+        }
+        private void ting_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void S_Click(object sender, EventArgs e)
+        {
+            serialPort1.Write("G91G0X0Y0Z1\n");
+            cur_pos.pr.z = cur_pos.pr.z + 1;
+            cur_pos.calculate_delta();
+        }
+
+        private void Y_Click(object sender, EventArgs e)
+        {
+            serialPort1.Write("G91G0X0Y-1Z0\n");
+            cur_pos.pr.y = cur_pos.pr.y - 1;
+            cur_pos.calculate_delta();
+        }
+
+        private void X_Click(object sender, EventArgs e)
+        {
+            serialPort1.Write("G91G0X0Y0Z-1\n");
+            cur_pos.pr.z = cur_pos.pr.z - 1;
+            cur_pos.calculate_delta();
+        }
+
+        private void Z_Click(object sender, EventArgs e)
+        {
+            serialPort1.Write("G91G0X0Y1Z0\n");
+            cur_pos.pr.y = cur_pos.pr.y + 1;
+            cur_pos.calculate_delta();
+        }
+
+        private void qian_Click(object sender, EventArgs e)
+        {
+            serialPort1.Write("G91G0X1Y0Z0\n");
+            cur_pos.pr.x = cur_pos.pr.x + 1;
+            cur_pos.calculate_delta();
+        }
+
+        
+
+        private void hou_Click(object sender, EventArgs e)
+        {
+            serialPort1.Write("G91G0X-1Y0Z0\n");
+            cur_pos.pr.x = cur_pos.pr.x - 1;
+            cur_pos.calculate_delta();
+        }
+
+        
     }
 }
